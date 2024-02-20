@@ -31,8 +31,11 @@ const server = http.createServer((req, res) => {
     
     fs.readFile(filePath, (err, data) => {
 		if (err) {
-			res.writeHead(404, { "Content-Type": "text-html" });
-			return res.end("404 not found");
+			res.writeHead(500, { "Content-Type": "text-html" });
+			return res.end(`Error loading: ${err}`);
+        } else if (fileName === "404.html"){
+            res.writeHead(404, { "Content-Type": "text-html" });
+            return res.end(data);``
         }
 		res.writeHead(200, { "Content-Type": "text/html" });
 		res.end(data);
